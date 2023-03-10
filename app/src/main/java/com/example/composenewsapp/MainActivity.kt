@@ -1,22 +1,20 @@
 package com.example.composenewsapp
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.composenewsapp.ui.theme.ComposeNewsAppTheme
+import com.example.composenewsapp.presentation.base.BaseActivity
+import com.example.composenewsapp.presentation.theme.ComposeNewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ComposeNewsAppTheme {
+@AndroidEntryPoint
+class MainActivity : BaseActivity() {
+    @Composable
+    override fun Content() {
+        // Text(text = "hello seif")
 
-            }
-        }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
