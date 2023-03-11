@@ -33,7 +33,7 @@ fun NoInternetConnectionSectionPortrait(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.nointernet_connection),
+            painter = painterResource(id = R.drawable.ic_newzz_error),
             contentDescription = "No internet connection image",
             Modifier
                 .padding(top = 120.dp, bottom = 25.dp)
@@ -121,7 +121,7 @@ fun NoInternetConnectionSectionLandscape(
             }
         }
         Image(
-            painter = painterResource(id = R.drawable.nointernet_connection),
+            painter = painterResource(id = R.drawable.ic_newzz_error),
             contentDescription = "No internet connection image",
             Modifier
                 .fillMaxWidth()
