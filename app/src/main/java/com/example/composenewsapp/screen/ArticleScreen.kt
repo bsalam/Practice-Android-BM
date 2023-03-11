@@ -14,17 +14,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.composenewsapp.domain.model.Article
 import com.example.composenewsapp.presentation.common_components.HeightSpacer
 import com.example.composenewsapp.presentation.common_components.RemoteImage
 import com.example.composenewsapp.presentation.common_components.WidthSpacer
-import com.example.composenewsapp.presentation.news.NewsArticle
 
 
 @Composable
-fun ArticleRow(article: NewsArticle, onClick: () -> Unit) {
+fun ArticleRow(article: Article, onClick: () -> Unit) {
     Column(modifier = Modifier.clickable(onClick = { onClick() })) {
         Row(
             modifier = Modifier.padding(all = 10.dp),
@@ -36,12 +35,10 @@ fun ArticleRow(article: NewsArticle, onClick: () -> Unit) {
             )
             WidthSpacer(value = 10.dp)
             Column {
-                if (!article.source.name.isNullOrEmpty()) {
-                    Text(
-                        text = article.source.name!!
-                    )
-                    HeightSpacer(value = 4.dp)
-                }
+                Text(
+                    text = article.author
+                )
+                HeightSpacer(value = 4.dp)
                 Text(
                     text = article.title,
                     maxLines = 3,
@@ -63,7 +60,7 @@ fun ArticleRow(article: NewsArticle, onClick: () -> Unit) {
 }
 
 @Composable
-fun ArticleList(articles: List<NewsArticle>) {
+fun ArticleList(articles: List<Article>) {
     LazyColumn {
         items(articles) { article ->
             ArticleRow(
