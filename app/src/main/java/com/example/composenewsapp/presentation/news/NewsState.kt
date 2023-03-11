@@ -1,8 +1,9 @@
 package com.example.composenewsapp.presentation.news
 
+import com.example.composenewsapp.domain.model.Article
 import com.example.composenewsapp.presentation.base.BaseState
 
 data class NewsState(
-    val news: List<String>? = null,
-    val baseState: BaseState = BaseState.Empty
+    val news: List<Article>? = null,
+    val state: BaseState = BaseState.Empty
 )
