@@ -4,8 +4,7 @@ import com.example.composenewsapp.data.data_source.remote.api.NewsApi
 import com.example.composenewsapp.data.data_source.remote.api.RetrofitInstance
 import com.example.composenewsapp.data.data_source.repository.NewsRepositoryImp
 import com.example.composenewsapp.domain.repository.NewsRepository
-import com.example.composenewsapp.domain.use_cases.BreakingNewsUseCase
-import com.example.composenewsapp.domain.use_cases.NewsUseCase
+import com.example.composenewsapp.domain.use_cases.FetchNewsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,19 +18,19 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsApi(): NewsApi{
-        return RetrofitInstance.api;
+        return RetrofitInstance.api
     }
 
     @Provides
     @Singleton
     fun provideNewsRepository(api: NewsApi): NewsRepository {
-        return NewsRepositoryImp(api);
+        return NewsRepositoryImp(api)
     }
 
     @Provides
     @Singleton
-    fun provideNewsUseCase(newsRepository: NewsRepository): NewsUseCase {
-        return NewsUseCase(newsRepository);
+    fun provideNewsUseCase(newsRepository: NewsRepository): FetchNewsUseCase {
+        return FetchNewsUseCase(newsRepository)
     }
 
 }

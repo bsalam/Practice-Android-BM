@@ -7,12 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composenewsapp.presentation.common_components.*
 import com.example.composenewsapp.presentation.theme.ComposeNewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 abstract class BaseActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +23,8 @@ abstract class BaseActivity : ComponentActivity() {
             ComposeNewsAppTheme() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     Content()
+                    val baseViewModel = hiltViewModel<BaseViewModel>()
+                    HandleUI(baseViewModel.state.collectAsState().value)
                 }
             }
         }
@@ -30,17 +34,21 @@ abstract class BaseActivity : ComponentActivity() {
     abstract fun Content()
 
     @Composable
-    fun HandleUI(viewState: BaseState) {
-        when (viewState) {
+    fun HandleUI(
+        state: BaseState,
+    ) {
+        //val state = baseViewModel.state.collectAsState().value
+        Log.d("---", " Handle Uit      $state")
+        when (state) {
             is BaseState.Empty -> Unit
             is BaseState.Loading -> {
                 ShowLoader()
             }
             is BaseState.Error -> {
-                ShowSnackBar(viewState.errorMessage)
+                ShowSnackBar(state.errorMessage.asString())
             }
             is BaseState.NoInternetConnection -> {
-                ShowNoInternetConnection(viewState.message)
+                ShowNoInternetConnection(state.message.asString())
             }
         }
     }

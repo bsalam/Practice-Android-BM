@@ -9,8 +9,8 @@ fun ArticleDto.toArticle(): Article {
         title = title,
         description = description,
         url = url,
-        urlToImage = urlToImage,
+        urlToImage = urlToImage ?: "",
         publishedAt = publishedAt,
-        author = author
+        author = author ?: "Seif"
     )
 }

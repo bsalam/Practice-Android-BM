@@ -21,7 +21,6 @@ import com.example.composenewsapp.presentation.common_components.HeightSpacer
 import com.example.composenewsapp.presentation.common_components.RemoteImage
 import com.example.composenewsapp.presentation.common_components.WidthSpacer
 
-
 @Composable
 fun ArticleRow(article: Article, onClick: () -> Unit) {
     Column(modifier = Modifier.clickable(onClick = { onClick() })) {
@@ -46,7 +45,7 @@ fun ArticleRow(article: Article, onClick: () -> Unit) {
                 )
                 HeightSpacer(value = 4.dp)
                 Text(
-                    text = article.publishedAt.substring(0, 1)
+                    text = article.publishedAt
                 )
             }
         }
