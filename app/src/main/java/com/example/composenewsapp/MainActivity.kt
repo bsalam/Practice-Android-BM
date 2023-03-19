@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.composenewsapp.domain.model.NewsQuery
+import com.example.composenewsapp.domain.models.NewsQuery
 import com.example.composenewsapp.presentation.base.BaseActivity
 import com.example.composenewsapp.presentation.news.NewsViewModel
 import com.example.composenewsapp.screen.ArticleList

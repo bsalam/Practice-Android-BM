@@ -2,8 +2,9 @@ package com.example.composenewsapp.presentation.news
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.example.composenewsapp.domain.model.Article
-import com.example.composenewsapp.domain.model.NewsQuery
+import com.example.composenewsapp.domain.error_handler.ErrorEntity
+import com.example.composenewsapp.domain.models.ArticleDomainModel
+import com.example.composenewsapp.domain.models.NewsQuery
 import com.example.composenewsapp.domain.use_cases.FetchNewsUseCase
 import com.example.composenewsapp.presentation.base.BaseState
 import com.example.composenewsapp.presentation.base.BaseViewModel
@@ -20,8 +21,8 @@ class NewsViewModel @Inject constructor(
     private val fetchNewsUseCase: FetchNewsUseCase,
 ) : BaseViewModel() {
 
-    private val _news = MutableStateFlow(listOf<Article>())
-    val news: StateFlow<List<Article>> get() = _news
+    private val _news = MutableStateFlow(listOf<ArticleDomainModel>())
+    val news: StateFlow<List<ArticleDomainModel>> get() = _news
 
     fun requestNews(newsQuery: NewsQuery) {
         Log.d("---", "request news $newsQuery")
@@ -34,7 +35,11 @@ class NewsViewModel @Inject constructor(
                         _news.value = it.data
                     }
                     is Resource.Error -> {
-                        setState(BaseState.Error(it.message))
+                        when (it.error){
+                            is ErrorEntity.Network -> {}  // show network error + reload action
+                            is ErrorEntity.ServiceUnavailable -> {}  // show service error + go back button
+                            else -> {}  // show unknown error
+                        }
                     }
                 }
             }
