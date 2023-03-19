@@ -8,6 +8,9 @@ sealed class BaseState {
     data class Error(val errorMessage: UiText) : BaseState()
     data class NoInternetConnection(val message: UiText) : BaseState()
 }
-data class MyState (
-    val baseState: BaseState = BaseState.Empty
-)
+
+//data class BaseState (
+//   val loading :Boolean = false,
+//    val errorMessage: UiText = UiText.DynamicString(""),
+//    val noInternetConnection: UiText = UiText.DynamicString("")
+//)
