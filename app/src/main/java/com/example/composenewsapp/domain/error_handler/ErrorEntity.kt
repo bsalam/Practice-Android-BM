@@ -2,6 +2,8 @@ package com.example.composenewsapp.domain.error_handler
 
 sealed class ErrorEntity {
 
+    object Empty : ErrorEntity()
+
     object Network : ErrorEntity()
 
     object NotFound : ErrorEntity()

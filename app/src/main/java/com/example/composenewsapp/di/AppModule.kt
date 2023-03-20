@@ -2,6 +2,7 @@ package com.example.composenewsapp.di
 
 import com.example.composenewsapp.data.data_source.remote.api.NewsApi
 import com.example.composenewsapp.data.data_source.remote.api.RetrofitInstance
+import com.example.composenewsapp.data.error_handler.ErrorHandlerImpl
 import com.example.composenewsapp.data.repository.NewsRepositoryImpl
 import com.example.composenewsapp.domain.error_handler.ErrorHandler
 import com.example.composenewsapp.domain.repository.NewsRepository
@@ -20,6 +21,12 @@ object AppModule {
     @Singleton
     fun provideNewsApi(): NewsApi{
         return RetrofitInstance.api
+    }
+
+    @Provides
+    @Singleton
+    fun provideErrorHandler(): ErrorHandler {
+        return ErrorHandlerImpl()
     }
 
     @Provides

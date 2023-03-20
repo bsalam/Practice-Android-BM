@@ -24,6 +24,9 @@ class NewsViewModel @Inject constructor(
     private val _news = MutableStateFlow(listOf<ArticleDomainModel>())
     val news: StateFlow<List<ArticleDomainModel>> get() = _news
 
+    private val _error = MutableStateFlow<ErrorEntity>(ErrorEntity.Empty)
+    val error: StateFlow<ErrorEntity> get() = _error
+
     fun requestNews(newsQuery: NewsQuery) {
         Log.d("---", "request news $newsQuery")
         setState(BaseState.Loading)
@@ -36,9 +39,17 @@ class NewsViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         when (it.error){
-                            is ErrorEntity.Network -> {}  // show network error + reload action
-                            is ErrorEntity.ServiceUnavailable -> {}  // show service error + go back button
-                            else -> {}  // show unknown error
+                            is ErrorEntity.Network -> {
+                                _error.value = ErrorEntity.Network
+                                // show network error + reload action (in activity)
+                            }
+                            is ErrorEntity.ServiceUnavailable -> {
+                                _error.value = ErrorEntity.ServiceUnavailable
+                                // show service error + go back button   (in activity)
+                            }
+                            else -> {
+
+                            }  // show unknown error
                         }
                     }
                 }
