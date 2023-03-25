@@ -2,9 +2,9 @@ package com.example.composenewsapp.di
 
 import com.example.composenewsapp.data.data_source.remote.api.NewsApi
 import com.example.composenewsapp.data.data_source.remote.api.RetrofitInstance
-import com.example.composenewsapp.data.error_handler.ErrorHandlerImpl
+import com.example.composenewsapp.data.exception_handler.ExceptionHandlerImpl
 import com.example.composenewsapp.data.repository.NewsRepositoryImpl
-import com.example.composenewsapp.domain.error_handler.ErrorHandler
+import com.example.composenewsapp.domain.exception_handler.ExceptionHandler
 import com.example.composenewsapp.domain.repository.NewsRepository
 import com.example.composenewsapp.domain.use_cases.FetchNewsUseCase
 import dagger.Module
@@ -25,14 +25,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideErrorHandler(): ErrorHandler {
-        return ErrorHandlerImpl()
+    fun provideErrorHandler(): ExceptionHandler {
+        return ExceptionHandlerImpl()
     }
 
     @Provides
     @Singleton
-    fun provideNewsRepository(api: NewsApi, errorHandler: ErrorHandler): NewsRepository {
-        return NewsRepositoryImpl(api, errorHandler)
+    fun provideNewsRepository(api: NewsApi, exceptionHandler: ExceptionHandler): NewsRepository {
+        return NewsRepositoryImpl(api, exceptionHandler)
     }
 
     @Provides

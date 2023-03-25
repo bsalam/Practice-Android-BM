@@ -1,57 +1,56 @@
 package com.example.composenewsapp.data.repository
 
-import android.util.Log
 import com.example.composenewsapp.data.mapper.toArticleDomainModel
 import com.example.composenewsapp.data.data_source.remote.api.NewsApi
-import com.example.composenewsapp.domain.error_handler.ErrorHandler
+import com.example.composenewsapp.domain.exception_handler.ExceptionHandler
 import com.example.composenewsapp.domain.models.ArticleDomainModel
 import com.example.composenewsapp.domain.models.BreakingNewsQuery
 import com.example.composenewsapp.domain.models.NewsQuery
 import com.example.composenewsapp.domain.repository.NewsRepository
-import com.example.composenewsapp.utils.Resource
+import com.example.composenewsapp.utils.Constants.Companion.SEARCH_NEWS_TIMEOUT
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
     private val api: NewsApi,
-    private val errorHandler: ErrorHandler
+    private val exceptionHandler: ExceptionHandler
 ) : NewsRepository{
+
     override suspend fun getNews(
         newsQuery: NewsQuery
-    ): Resource<List<ArticleDomainModel>>  {
+    ): List<ArticleDomainModel>  {
         return try {
+            withTimeout(SEARCH_NEWS_TIMEOUT){
+                val response = api.getNews(
+                    searchStatement = newsQuery.searchStatement,
+                    pageNumber = newsQuery.pageNumber,
+                    fromDate = newsQuery.fromDate,
+                    toDate = newsQuery.toDate,
+                    language = newsQuery.language
+                )
 
-            val response = api.getNews(
-                searchStatement = newsQuery.searchStatement,
-                pageNumber = newsQuery.pageNumber,
-                fromDate = newsQuery.fromDate,
-                toDate = newsQuery.toDate,
-                language = newsQuery.language
-            )
-            Log.d("---", "${response.articles}")
-            Resource.Success(response.articles.map { it.toArticleDomainModel() })
-
+                response.articles.map { it.toArticleDomainModel() }
+            }
         } catch (e: Exception) {
-            Log.d("---", "Error: ${e.message}")
-            Resource.Error(errorHandler.getError(e))
+            throw exceptionHandler.getCustomException(e)
         }
     }
 
     override suspend fun getBreakingNews(
         breakingNewsQuery: BreakingNewsQuery
-    ): Resource<List<ArticleDomainModel>> {
+    ): List<ArticleDomainModel> {
         return try {
+            withTimeout(SEARCH_NEWS_TIMEOUT){
+                val response = api.getBreakingNews(
+                    searchStatement = breakingNewsQuery.searchStatement,
+                    pageNumber = breakingNewsQuery.pageNumber,
+                    countryCode = breakingNewsQuery.countryCode
+                )
 
-            val response = api.getBreakingNews(
-                searchStatement = breakingNewsQuery.searchStatement,
-                pageNumber = breakingNewsQuery.pageNumber,
-                countryCode = breakingNewsQuery.countryCode
-            )
-
-            Resource.Success(response.articles.map { it.toArticleDomainModel() })
-
+                response.articles.map { it.toArticleDomainModel() }
+            }
         } catch (e: Exception) {
-
-            Resource.Error(errorHandler.getError(e))
+            throw exceptionHandler.getCustomException(e)
         }
 
     }
