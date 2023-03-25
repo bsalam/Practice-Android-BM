@@ -1,6 +1,6 @@
 package com.example.composenewsapp.data.data_source.remote.api
 
-import com.example.composenewsapp.data.data_source.remote.dto.NewsResponse
+import com.example.composenewsapp.data.data_source.remote.models.NewsResponseDataModel
 import com.example.composenewsapp.utils.Constants.Companion.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,7 +20,7 @@ interface NewsApi {
         toDate: String = "",
         @Query("language")
         language: String = "",
-    ) : NewsResponse
+    ) : NewsResponseDataModel
 
     @GET("/v2/top-headlines")
     suspend fun getBreakingNews(
@@ -34,5 +34,5 @@ interface NewsApi {
         countryCode: String = "",
 //        @Query("category")
 //        category: String = "",  // Allowed values ["business", "entertainment", "general", "health", "science", "sports", "technology"]
-    ) : NewsResponse
+    ) : NewsResponseDataModel
 }

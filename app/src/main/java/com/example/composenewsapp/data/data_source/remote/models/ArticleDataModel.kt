@@ -1,7 +1,7 @@
-package com.example.composenewsapp.data.data_source.remote.dto
+package com.example.composenewsapp.data.data_source.remote.models
 
-data class ArticleDto(
-    var source      : Source,
+data class ArticleDataModel(
+    var source      : SourceDataModel,
     var author      : String?,
     var title       : String,
     var description : String,
