@@ -1,7 +1,6 @@
 package com.example.composenewsapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,28 +38,28 @@ class MainActivity : BaseActivity() {
         }
     }
     
-@Composable
-fun NewsScreen(
-    scaffoldState: ScaffoldState,
-    paddingValues: PaddingValues,
-    viewModel: NewsViewModel = hiltViewModel()
-) {
-    LaunchedEffect(key1 = Unit) {
-        val query = NewsQuery(
-            searchStatement = "Technology",
-        )
-        viewModel.requestNews(query)
+    @Composable
+    fun NewsScreen(
+        scaffoldState: ScaffoldState,
+        paddingValues: PaddingValues,
+        viewModel: NewsViewModel = hiltViewModel()
+    ) {
+        LaunchedEffect(key1 = Unit) {
+            val query = NewsQuery(
+                searchStatement = "Technology",
+            )
+            viewModel.requestNews(query)
+        }
+
+        val articles by viewModel.news.collectAsState()
+
+        val state by viewModel.state.collectAsState()
+
+        if (articles.isEmpty()) {
+            HandleUI(scaffoldState = scaffoldState, state = state)
+        } else {
+            ArticleList(articles = articles, paddingValues)
+        }
     }
-
-    val articles by viewModel.news.collectAsState()
-
-    val state by viewModel.state.collectAsState()
-
-    if (articles == null) {
-        HandleUI(scaffoldState = scaffoldState, state = basestate.value)
-    } else {
-        ArticleList(articles = news.value, paddingValues)
-    }
-
 }
 

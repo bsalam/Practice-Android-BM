@@ -1,6 +1,5 @@
 package com.example.composenewsapp.presentation.base
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,7 @@ abstract class BaseActivity : ComponentActivity() {
                     is ErrorEntity.ServiceUnreachable -> { Log.d("@@@", "Service Unreachable Error") }
                     is ErrorEntity.Unknown -> { Log.d("@@@", "Unknown Error") }
                 }
-                ShowSnackBar("Some error occurred")
+                ShowSnackBar(scaffoldState, "Some error occurred")
             }
             is BaseState.NoInternetConnection -> {
                 ShowNoInternetConnection(state.message.asString())
@@ -43,7 +42,7 @@ abstract class BaseActivity : ComponentActivity() {
         }
     }
 
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
     @Composable
     fun ShowSnackBar(
         scaffoldState: ScaffoldState,
@@ -54,9 +53,7 @@ abstract class BaseActivity : ComponentActivity() {
         Log.d("---", "Error Message: $message")
         if (baseViewModel.isFirstTime) {
             lifecycleScope.launchWhenStarted {
-                //newsViewModel.errorMessages.collectLatest {
-                    scaffoldState.snackbarHostState.showSnackbar(message)
-                //}
+                scaffoldState.snackbarHostState.showSnackbar(message)
                 baseViewModel.isFirstTime = false
             }
         }
