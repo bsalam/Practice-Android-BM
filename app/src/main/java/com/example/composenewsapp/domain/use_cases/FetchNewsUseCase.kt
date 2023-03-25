@@ -6,7 +6,7 @@ import com.example.composenewsapp.domain.repository.NewsRepository
 import javax.inject.Inject
 
 class FetchNewsUseCase @Inject constructor(
-    private val repository: NewsRepository,
+    private val repository: NewsRepository
 ) {
     suspend operator fun invoke(newsQuery: NewsQuery): List<ArticleDomainModel> {
         return repository.getNews(newsQuery)

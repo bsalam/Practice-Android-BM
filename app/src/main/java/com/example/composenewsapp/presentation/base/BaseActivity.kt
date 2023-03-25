@@ -1,11 +1,14 @@
 package com.example.composenewsapp.presentation.base
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import com.example.composenewsapp.domain.exception_handler.ErrorEntity
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.composenewsapp.presentation.common_components.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,11 +19,9 @@ abstract class BaseActivity : ComponentActivity() {
 
     @Composable
     fun HandleUI(
-        state: BaseState
+        state: BaseState,
+        scaffoldState: ScaffoldState,
     ) {
-
-        //val state = baseViewModel.state.collectAsState().value
-        Log.d("---", " Handle Uit      $state")
         when (state) {
             is BaseState.Empty -> Unit
             is BaseState.Loading -> {
@@ -42,21 +43,28 @@ abstract class BaseActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
-    fun ShowSnackBar(message: String) {
-        Log.d("News", "Error Message: $message")
-        val scaffoldState = rememberScaffoldState()
-        LaunchedEffect(key1 = message) {
-            scaffoldState.snackbarHostState.showSnackbar(
-                message = message,
-                duration = SnackbarDuration.Short
-            )
+    fun ShowSnackBar(
+        scaffoldState: ScaffoldState,
+        message: String,
+        baseViewModel:BaseViewModel = hiltViewModel()
+    ) {
+
+        Log.d("---", "Error Message: $message")
+        if (baseViewModel.isFirstTime) {
+            lifecycleScope.launchWhenStarted {
+                //newsViewModel.errorMessages.collectLatest {
+                    scaffoldState.snackbarHostState.showSnackbar(message)
+                //}
+                baseViewModel.isFirstTime = false
+            }
         }
     }
 
     @Composable
     private fun ShowLoader() {
-        Log.d("&&&", "loading...")
+        Log.d("---", "loading...")
         Column {
             repeat(10) {
                 AnimatedShimmer()
@@ -66,7 +74,7 @@ abstract class BaseActivity : ComponentActivity() {
 
     @Composable
     private fun ShowNoInternetConnection(errorMessage: String) {
-        Log.d("&&&", "no Internet Connection")
+        Log.d("---", "no Internet Connection")
         val windowInfo = rememberWindowInfo()
         if (errorMessage.isNotBlank()) {
             when (windowInfo.screenWidthInfo) {

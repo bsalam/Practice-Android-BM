@@ -1,9 +1,9 @@
 package com.example.composenewsapp
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -18,70 +18,49 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val scaffoldState = rememberScaffoldState()
             ComposeNewsAppTheme() {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    NewsScreen()
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        topBar = {
+                            TopAppBar() {
+                                Text("News App BM")
+                            }
+                        }
+                    ) {
+                        NewsScreen(scaffoldState, it)
+                    }
                 }
             }
         }
     }
+    
+@Composable
+fun NewsScreen(
+    scaffoldState: ScaffoldState,
+    paddingValues: PaddingValues,
+    viewModel: NewsViewModel = hiltViewModel()
+) {
+    LaunchedEffect(key1 = Unit) {
+        val query = NewsQuery(
+            searchStatement = "Technology",
+        )
+        viewModel.requestNews(query)
+    }
 
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-    @Composable
-    fun NewsScreen(
-        viewModel: NewsViewModel = hiltViewModel(),
-    ) {
+    val articles by viewModel.news.collectAsState()
 
-        LaunchedEffect(key1 = Unit){
-            val query = NewsQuery(
-                searchStatement = "Technology",
-            )
+    val state by viewModel.state.collectAsState()
 
-            viewModel.requestNews(query)
-
-        }
-
-//                    // check if there is an internet connection
-//                    val connectivityObserver = NetworkConnectivityObserver(context)
-//                    val status by connectivityObserver.observe().collectAsState(
-//                        initial = ConnectivityObserver.Status.Unavailable
-//                    )
-//
-//                    when(status) {
-//                        ConnectivityObserver.Status.Available -> {
-//                            viewModel.requestNews(query)
-//                        }
-//                        else -> {
-//                            // navigate to NoInternetConnectionSectionPortrait()
-//                        }
-//                    }
-
-
-        val articles by viewModel.news.collectAsState()
-
-        val state by viewModel.state.collectAsState()
-
-        Log.d("&&&", "Before HandleUI")
-        HandleUI(state)
-
-        Scaffold(
-            topBar = {
-                TopAppBar() {
-                    Text("News App BM")
-                }
-            }
-        ) {
-            ArticleList(
-                articles = articles,
-            )
-        }
+    if (articles == null) {
+        HandleUI(scaffoldState = scaffoldState, state = basestate.value)
+    } else {
+        ArticleList(articles = news.value, paddingValues)
     }
 
 }
-
 

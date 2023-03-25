@@ -59,8 +59,15 @@ fun ArticleRow(article: ArticleDomainModel, onClick: () -> Unit) {
 }
 
 @Composable
-fun ArticleList(articles: List<ArticleDomainModel>) {
-    LazyColumn {
+fun ArticleList(
+    articles: List<ArticleDomainModel>,
+    paddingValues: PaddingValues
+) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(paddingValues)
+            .fillMaxSize()
+    ) {
         items(articles) { article ->
             ArticleRow(
                 article = article,
