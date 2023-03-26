@@ -12,17 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composenewsapp.R
-import com.example.composenewsapp.presentation.news.NewsViewModel
 import com.example.composenewsapp.presentation.theme.LightGreen
 import com.example.composenewsapp.presentation.theme.LightWhite
 
+
 @Composable
 fun NoInternetConnectionSectionPortrait(
-    newsViewModel: NewsViewModel = hiltViewModel()
+    // newsViewModel: NewsViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier
@@ -33,7 +34,7 @@ fun NoInternetConnectionSectionPortrait(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_newzz_error),
+            painter = painterResource(id = R.drawable.nointernet_connection),
             contentDescription = "No internet connection image",
             Modifier
                 .padding(top = 120.dp, bottom = 25.dp)
@@ -42,13 +43,16 @@ fun NoInternetConnectionSectionPortrait(
         )
         Text(
             text = "Something Went Wrong..",
-            style = MaterialTheme.typography.h3,
-            modifier = Modifier.padding(bottom = 10.dp)
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.padding(bottom = 10.dp),
+            textAlign = TextAlign.Center
         )
 
         Text(
             text = "An alien is probably blocking your signal",
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center
+
         )
         Spacer(modifier = Modifier.height(80.dp))
 
@@ -72,7 +76,7 @@ fun NoInternetConnectionSectionPortrait(
 
 @Composable
 fun NoInternetConnectionSectionLandscape(
-    newsViewModel: NewsViewModel = hiltViewModel()
+    // newsViewModel: NewsViewModel = hiltViewModel()
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -87,7 +91,7 @@ fun NoInternetConnectionSectionLandscape(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(start = 20.dp) ,
+                .padding(start = 20.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -121,7 +125,7 @@ fun NoInternetConnectionSectionLandscape(
             }
         }
         Image(
-            painter = painterResource(id = R.drawable.ic_newzz_error),
+            painter = painterResource(id = R.drawable.nointernet_connection),
             contentDescription = "No internet connection image",
             Modifier
                 .fillMaxWidth()
@@ -131,3 +135,13 @@ fun NoInternetConnectionSectionLandscape(
         )
     }
 }
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun NoInternetConnectionSectionPortraitPreview() {
+    NoInternetConnectionSectionPortrait()
+}
+
