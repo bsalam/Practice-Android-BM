@@ -13,7 +13,6 @@ class ExceptionHandlerImpl : ExceptionHandler {
         return when(throwable) {
             is IOException -> CustomException.NetworkException
             is TimeoutCancellationException -> CustomException.TimeoutException
-            is IllegalStateException -> CustomException.NewsNotFoundException
             is HttpException -> {
                 when(throwable.code()) {
 
@@ -26,6 +25,7 @@ class ExceptionHandlerImpl : ExceptionHandler {
                     else -> CustomException.UnknownException
                 }
             }
+            is IllegalStateException -> CustomException.NewsNotFoundException
             else -> CustomException.UnknownException
         }
     }

@@ -23,9 +23,9 @@ sealed class CustomException : Exception() {
             is NoInternetConnectionException -> ErrorEntity.NoInternetConnection
             is TimeoutException -> ErrorEntity.Timeout
             is NetworkException -> ErrorEntity.Network
-            is NewsNotFoundException -> ErrorEntity.NotFound
             is ServiceNotFoundException, AccessDeniedException, ServiceUnavailableException ->
                 ErrorEntity.ServiceUnreachable
+            is NewsNotFoundException -> ErrorEntity.NotFound
             is UnknownException -> ErrorEntity.Unknown
         }
     }
