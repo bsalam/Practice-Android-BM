@@ -32,6 +32,7 @@ abstract class BaseActivity : ComponentActivity() {
                     is ErrorEntity.NoInternetConnection -> { Log.d("@@@", "No Internet Connection Error") }
                     is ErrorEntity.Network -> { Log.d("@@@", "Network Error") }
                     is ErrorEntity.ServiceUnreachable -> { Log.d("@@@", "Service Unreachable Error") }
+                    is ErrorEntity.NotFound -> { Log.d("@@@", "Not Found") }
                     is ErrorEntity.Unknown -> { Log.d("@@@", "Unknown Error") }
                 }
                 ShowSnackBar(scaffoldState, "Some error occurred")

@@ -13,10 +13,11 @@ class ExceptionHandlerImpl : ExceptionHandler {
         return when(throwable) {
             is IOException -> CustomException.NetworkException
             is TimeoutCancellationException -> CustomException.TimeoutException
+            is IllegalStateException -> CustomException.NewsNotFoundException
             is HttpException -> {
                 when(throwable.code()) {
 
-                    HttpURLConnection.HTTP_NOT_FOUND -> CustomException.NotFoundException
+                    HttpURLConnection.HTTP_NOT_FOUND -> CustomException.ServiceNotFoundException
 
                     HttpURLConnection.HTTP_FORBIDDEN -> CustomException.AccessDeniedException
 
