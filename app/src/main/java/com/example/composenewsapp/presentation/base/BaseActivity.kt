@@ -8,12 +8,12 @@ import androidx.compose.runtime.*
 import com.example.composenewsapp.domain.exception_handler.ErrorEntity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
+import com.example.composenewsapp.R
 import com.example.composenewsapp.presentation.common_components.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 abstract class BaseActivity : ComponentActivity() {
-
 
 
     @Composable
@@ -27,18 +27,25 @@ abstract class BaseActivity : ComponentActivity() {
                 ShowLoader()
             }
             is BaseState.Error -> {   // should handle each error
-                when(state.error){
-                    is ErrorEntity.Timeout -> { Log.d("@@@", "Timeout Error") }
-                    is ErrorEntity.NoInternetConnection -> { Log.d("@@@", "No Internet Connection Error") }
-                    is ErrorEntity.Network -> { Log.d("@@@", "Network Error") }
-                    is ErrorEntity.ServiceUnreachable -> { Log.d("@@@", "Service Unreachable Error") }
+                when (state.error) {
+                    is ErrorEntity.Timeout -> ShowSnackBar(scaffoldState, getString(R.string.timeout_exception_message))
+
+                    is ErrorEntity.NoInternetConnection -> {
+                        ShowNoInternetConnection(
+                            errorMessage = getString(R.string.no_internet_connection_exception_message)
+                        )
+                    }
+                    is ErrorEntity.Network -> {
+                        ShowSnackBar(scaffoldState, getString(R.string.network_exception_meesage))
+                    }
+                    is ErrorEntity.ServiceUnreachable -> {
+                        ShowSnackBar(scaffoldState, getString(R.string.service_unreachable_exception_message))
+                    }
                     is ErrorEntity.NotFound -> { Log.d("@@@", "Not Found") }
-                    is ErrorEntity.Unknown -> { Log.d("@@@", "Unknown Error") }
+                    is ErrorEntity.Unknown -> {
+                        ShowSnackBar(scaffoldState, getString(R.string.unknown_exception_message))
+                    }
                 }
-                ShowSnackBar(scaffoldState, "Some error occurred")
-            }
-            is BaseState.NoInternetConnection -> {
-                ShowNoInternetConnection(state.message.asString())
             }
         }
     }
@@ -48,7 +55,7 @@ abstract class BaseActivity : ComponentActivity() {
     fun ShowSnackBar(
         scaffoldState: ScaffoldState,
         message: String,
-        baseViewModel:BaseViewModel = hiltViewModel()
+        baseViewModel: BaseViewModel = hiltViewModel()
     ) {
 
         Log.d("---", "Error Message: $message")

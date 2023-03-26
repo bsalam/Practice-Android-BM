@@ -1,5 +1,6 @@
 package com.example.composenewsapp.di
 
+import android.net.ConnectivityManager
 import com.example.composenewsapp.data.data_source.remote.api.NewsApi
 import com.example.composenewsapp.data.data_source.remote.api.RetrofitInstance
 import com.example.composenewsapp.data.exception_handler.ExceptionHandlerImpl
@@ -19,7 +20,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsApi(): NewsApi{
+    fun provideNewsApi(): NewsApi {
         return RetrofitInstance.api
     }
 
@@ -31,8 +32,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(api: NewsApi, exceptionHandler: ExceptionHandler): NewsRepository {
-        return NewsRepositoryImpl(api, exceptionHandler)
+    fun provideNewsRepository(
+        api: NewsApi,
+        connectivityManager: ConnectivityManager,
+        exceptionHandler: ExceptionHandler
+    ): NewsRepository {
+        return NewsRepositoryImpl(api, connectivityManager, exceptionHandler)
     }
 
     @Provides
