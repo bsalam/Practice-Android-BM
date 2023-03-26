@@ -3,8 +3,9 @@
     <string name="error_message">Error</string>
     <string name="error_server_error">"Error Server "</string>
     <string name="no_internet_connection_exception_message">No Internet Connection</string>
-    <string name="timeout_exception_message">Timout, Check Your Internet Connection</string>
+    <string name="timeout_exception_message">Timeout, Check Your Internet Connection</string>
     <string name="network_exception_meesage">Network Error</string>
     <string name="service_unreachable_exception_message">Our service is not reachable at the moment</string>
+    <string name="news_not_found_exception_message">Can\'t find news for that subject.</string>
     <string name="unknown_exception_message">We are working on this issue</string>
 </resources>
