@@ -1,6 +1,6 @@
-package com.example.composenewsapp.domain.model
+package com.example.composenewsapp.domain.models
 
-data class Article(
+data class ArticleDomainModel(
     var title       : String,
     var description : String,
     var url         : String,

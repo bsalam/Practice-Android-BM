@@ -1,7 +1,6 @@
 package com.example.composenewsapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +8,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.composenewsapp.domain.model.NewsQuery
+import com.example.composenewsapp.domain.models.NewsQuery
 import com.example.composenewsapp.presentation.base.BaseActivity
-import com.example.composenewsapp.presentation.base.BaseViewModel
 import com.example.composenewsapp.presentation.news.NewsViewModel
 import com.example.composenewsapp.presentation.theme.ComposeNewsAppTheme
 import com.example.composenewsapp.screen.ArticleList
@@ -39,13 +37,12 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
+    
     @Composable
     fun NewsScreen(
         scaffoldState: ScaffoldState,
         paddingValues: PaddingValues,
-        viewModel: NewsViewModel = hiltViewModel(),
-        baseViewModel: BaseViewModel = hiltViewModel()
+        viewModel: NewsViewModel = hiltViewModel()
     ) {
         LaunchedEffect(key1 = Unit) {
             val query = NewsQuery(
@@ -54,24 +51,15 @@ class MainActivity : BaseActivity() {
             viewModel.requestNews(query)
         }
 
-        val news = viewModel.newsState.collectAsState()
-        val basestate = baseViewModel.baseState.collectAsState()
-        Log.d("---", "newsstate: $news")
-        Log.d("---", "basestate: $basestate")
-        // val errorMessages = viewModel.errorMessages.collectAsState(null).value
+        val articles by viewModel.news.collectAsState()
 
-//        if (errorMessages != null) {
-//            if (baseViewModel.isFirstTime) {
-//                LaunchedEffect(key1 = newsState) {
-//                    scaffoldState.snackbarHostState.showSnackbar(errorMessages)
-//                }
-//                baseViewModel.isFirstTime = false
-//            }
-//        }
-        if (news.value.isEmpty()) {
-            HandleUI(scaffoldState = scaffoldState, state = basestate.value)
+        val state by viewModel.state.collectAsState()
+
+        if (articles.isEmpty()) {
+            HandleUI(scaffoldState = scaffoldState, state = state)
         } else {
-            ArticleList(articles = news.value, paddingValues)
+            ArticleList(articles = articles, paddingValues)
         }
     }
 }
+

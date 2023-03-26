@@ -1,4 +1,4 @@
-package com.example.composenewsapp.domain.model
+package com.example.composenewsapp.domain.models
 
 data class BreakingNewsQuery(
     val searchStatement: String,

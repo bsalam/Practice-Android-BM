@@ -1,13 +1,11 @@
 package com.example.composenewsapp.domain.repository
 
-import com.example.composenewsapp.domain.model.Article
-import com.example.composenewsapp.domain.model.BreakingNewsQuery
-import com.example.composenewsapp.domain.model.NewsQuery
-import com.example.composenewsapp.utils.Resource
-import kotlinx.coroutines.flow.Flow
+import com.example.composenewsapp.domain.models.ArticleDomainModel
+import com.example.composenewsapp.domain.models.BreakingNewsQuery
+import com.example.composenewsapp.domain.models.NewsQuery
 
 interface NewsRepository {
 
-    suspend fun getNews(newsQuery: NewsQuery) :List<Article>
-    suspend fun getBreakingNews(breakingNewsQuery: BreakingNewsQuery) : Flow<Resource<List<Article>>>
+    suspend fun getNews(newsQuery: NewsQuery) : List<ArticleDomainModel>
+    suspend fun getBreakingNews(breakingNewsQuery: BreakingNewsQuery) : List<ArticleDomainModel>
 }

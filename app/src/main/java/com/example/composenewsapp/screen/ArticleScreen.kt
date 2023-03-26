@@ -13,13 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.composenewsapp.domain.model.Article
+import com.example.composenewsapp.domain.models.ArticleDomainModel
 import com.example.composenewsapp.presentation.common_components.HeightSpacer
 import com.example.composenewsapp.presentation.common_components.RemoteImage
 import com.example.composenewsapp.presentation.common_components.WidthSpacer
 
 @Composable
-fun ArticleRow(article: Article, onClick: () -> Unit) {
+fun ArticleRow(article: ArticleDomainModel, onClick: () -> Unit) {
     Column(modifier = Modifier.clickable(onClick = { onClick() })) {
         Row(
             modifier = Modifier.padding(all = 10.dp),
@@ -57,7 +57,7 @@ fun ArticleRow(article: Article, onClick: () -> Unit) {
 
 @Composable
 fun ArticleList(
-    articles: List<Article>,
+    articles: List<ArticleDomainModel>,
     paddingValues: PaddingValues
 ) {
     LazyColumn(

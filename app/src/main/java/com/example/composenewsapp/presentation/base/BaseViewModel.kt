@@ -1,62 +1,35 @@
 package com.example.composenewsapp.presentation.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.composenewsapp.domain.exception_handler.CustomException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
-    private val _baseState = MutableStateFlow<BaseState>(BaseState.Loading)
-    val baseState: StateFlow<BaseState> get() = _baseState
+    private val _state = MutableStateFlow<BaseState>(BaseState.Empty)
+    val state: StateFlow<BaseState> get() =  _state.asStateFlow()
     var isFirstTime: Boolean = true
-
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        Log.d("---", "in exception handler ${exception.message.toString()}")
-        isFirstTime = true
-        _baseState.value = BaseState.Error(errorMessage = exception.message.toString())
+        _state.value = BaseState.Error((exception as CustomException).toError())
     }
 
-    fun setLoadingState() {
-        //  _baseState.value = _baseState.value.copy(baseState = BaseState.Loading)
-        _baseState.value = BaseState.Loading
+    fun setState(newState: BaseState) {
+        // _myState.value = _myState.value.copy(baseState = newState)
+        _state.value = newState
     }
 
-    fun setErrorState(errorMessage: String) {
-        // _baseState.value = _baseState.value.copy(baseState = BaseState.Error(errorMessage))
-        _baseState.value = BaseState.Error(errorMessage)
-    }
-
-    suspend fun <T : Any> executeUseCase(call: suspend () -> T): T {
-//         withContext(Dispatchers.IO + exceptionHandler) {
-//            call.invoke().let {
-//                Log.d("---", "return form excecut: ${it.toString()}")
-//                when(it){
-//                    is Resource.Error -> throw it.throwable
-//                    is Resource.Success -> return@let it.data
-//                }
-//            }
-//        }
-        return withContext(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
-            // this code didn't execute
-            Log.d("---", "exception: ${throwable.toString()}")
-            isFirstTime = true
-            _baseState.value = BaseState.Error(errorMessage = throwable.message.toString())
-        }) {
-            Log.d("---", "call invoke")
-            try {
-                call.invoke()
-            }
-            catch (e:Exception){
-                isFirstTime = true
-                _baseState.value = BaseState.Error(errorMessage = e.message.toString())
-                throw e
-            }
+    suspend fun <T : Any> executeUseCase(call: suspend () -> T) {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+               call.invoke()
         }
     }
 }
