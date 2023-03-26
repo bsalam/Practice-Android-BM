@@ -16,7 +16,7 @@ class ExceptionHandlerImpl : ExceptionHandler {
             is HttpException -> {
                 when(throwable.code()) {
 
-                    HttpURLConnection.HTTP_NOT_FOUND -> CustomException.NotFoundException
+                    HttpURLConnection.HTTP_NOT_FOUND -> CustomException.ServiceNotFoundException
 
                     HttpURLConnection.HTTP_FORBIDDEN -> CustomException.AccessDeniedException
 
@@ -25,6 +25,7 @@ class ExceptionHandlerImpl : ExceptionHandler {
                     else -> CustomException.UnknownException
                 }
             }
+            is IllegalStateException -> CustomException.NewsNotFoundException
             else -> CustomException.UnknownException
         }
     }

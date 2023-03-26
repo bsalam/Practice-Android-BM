@@ -35,7 +35,9 @@ class NewsRepositoryImpl @Inject constructor(
                     language = newsQuery.language
                 )
 
-                response.articles.map { it.toArticleDomainModel() }
+                response.articles.map { it.toArticleDomainModel() }.ifEmpty {
+                    throw IllegalStateException()
+                }
             }
         } catch (e: Exception) {
             throw exceptionHandler.getCustomException(e)
@@ -56,7 +58,9 @@ class NewsRepositoryImpl @Inject constructor(
                     countryCode = breakingNewsQuery.countryCode
                 )
 
-                response.articles.map { it.toArticleDomainModel() }
+                response.articles.map { it.toArticleDomainModel() }.ifEmpty {
+                    throw IllegalStateException()
+                }
             }
         } catch (e: Exception) {
             throw exceptionHandler.getCustomException(e)
