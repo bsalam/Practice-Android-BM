@@ -23,7 +23,6 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setState(newState: BaseState) {
-        // _myState.value = _myState.value.copy(baseState = newState)
         _state.value = newState
     }
 
