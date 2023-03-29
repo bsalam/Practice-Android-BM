@@ -10,7 +10,5 @@ sealed class ErrorEntity {
 
     object ServiceUnreachable : ErrorEntity()
 
-    object NotFound : ErrorEntity()
-
     object Unknown : ErrorEntity()
 }

@@ -8,8 +8,6 @@ sealed class CustomException : Exception() {
 
     object NetworkException : CustomException()
 
-    object NewsNotFoundException : CustomException()
-
     object ServiceNotFoundException : CustomException()
 
     object AccessDeniedException : CustomException()
@@ -25,7 +23,6 @@ sealed class CustomException : Exception() {
             is NetworkException -> ErrorEntity.Network
             is ServiceNotFoundException, AccessDeniedException, ServiceUnavailableException ->
                 ErrorEntity.ServiceUnreachable
-            is NewsNotFoundException -> ErrorEntity.NotFound
             is UnknownException -> ErrorEntity.Unknown
         }
     }

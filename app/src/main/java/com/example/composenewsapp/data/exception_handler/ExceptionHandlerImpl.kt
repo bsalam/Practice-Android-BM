@@ -25,7 +25,6 @@ class ExceptionHandlerImpl : ExceptionHandler {
                     else -> CustomException.UnknownException
                 }
             }
-            is IllegalStateException -> CustomException.NewsNotFoundException
             else -> CustomException.UnknownException
         }
     }
