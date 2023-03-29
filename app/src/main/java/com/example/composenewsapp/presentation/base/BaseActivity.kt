@@ -21,10 +21,13 @@ abstract class BaseActivity : ComponentActivity() {
         state: BaseState,
         scaffoldState: ScaffoldState,
     ) {
-        when (state) {
+        when (state) {  // TODO: For each case, navigate to its proper screen
             is BaseState.Empty -> Unit
             is BaseState.Loading -> {
                 ShowLoader()
+            }
+            is BaseState.NotFound -> {
+                ShowSnackBar(scaffoldState,getString(R.string.news_not_found_message))
             }
             is BaseState.Error -> {   // should handle each error
                 when (state.error) {
@@ -40,9 +43,6 @@ abstract class BaseActivity : ComponentActivity() {
                     }
                     is ErrorEntity.ServiceUnreachable -> {
                         ShowSnackBar(scaffoldState, getString(R.string.service_unreachable_exception_message))
-                    }
-                    is ErrorEntity.NotFound -> {
-                        ShowSnackBar(scaffoldState, getString(R.string.news_not_found_exception_message))
                     }
                     is ErrorEntity.Unknown -> {
                         ShowSnackBar(scaffoldState, getString(R.string.unknown_exception_message))

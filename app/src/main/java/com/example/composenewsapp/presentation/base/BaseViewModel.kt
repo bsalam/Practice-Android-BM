@@ -26,9 +26,9 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         _state.value = newState
     }
 
-    suspend fun <T : Any> executeUseCase(call: suspend () -> T) {
+    fun <T : Any> executeUseCase(call: suspend () -> T) {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-               call.invoke()
+            call.invoke()
         }
     }
 }

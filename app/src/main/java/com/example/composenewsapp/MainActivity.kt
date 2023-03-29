@@ -90,11 +90,11 @@ class MainActivity : BaseActivity() {
 
         val state by viewModel.state.collectAsState()
 
-        if (articles.isEmpty()) {
-            HandleUI(scaffoldState = scaffoldState, state = state)
-        } else {
-            ArticleList(articles = articles, paddingValues)
-        }
+        HandleUI(scaffoldState = scaffoldState, state = state)
+
+        if(articles != null)
+            ArticleList(articles = articles!!, paddingValues)
+
     }
 
     @Composable
