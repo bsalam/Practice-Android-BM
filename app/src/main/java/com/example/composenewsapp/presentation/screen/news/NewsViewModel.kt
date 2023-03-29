@@ -1,4 +1,4 @@
-package com.example.composenewsapp.presentation.news
+package com.example.composenewsapp.presentation.screen.news
 
 import android.util.Log
 import com.example.composenewsapp.domain.models.ArticleDomainModel

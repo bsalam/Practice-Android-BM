@@ -18,6 +18,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     private val _state = MutableStateFlow<BaseState>(BaseState.Empty)
     val state: StateFlow<BaseState> get() =  _state.asStateFlow()
     var isFirstTime: Boolean = true
+
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _state.value = BaseState.Error((exception as CustomException).toError())
     }

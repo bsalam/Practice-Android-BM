@@ -1,10 +1,10 @@
-package com.example.composenewsapp.screen
-
+package com.example.composenewsapp.presentation.screen.news.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -52,26 +52,5 @@ fun ArticleRow(article: ArticleDomainModel, onClick: () -> Unit) {
                 alpha = 0.2f
             )
         )
-    }
-}
-
-@Composable
-fun ArticleList(
-    articles: List<ArticleDomainModel>,
-    paddingValues: PaddingValues
-) {
-    LazyColumn(
-        modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxSize()
-    ) {
-        items(articles) { article ->
-            ArticleRow(
-                article = article,
-                onClick = {
-                   println("-------")
-                }
-            )
-        }
     }
 }
