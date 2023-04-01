@@ -1,8 +1,10 @@
-package com.example.domain.use_cases
+package com.example.domain.use_cases.fetch_news
 
 import com.example.domain.models.CustomExceptionDomainModel
 import com.example.domain.models.NewsQueryDomainModel
 import com.example.domain.repository.NewsRepository
+import com.example.domain.use_cases.FetchNewsUseCase
+import com.example.domain.use_cases.fakeArticles
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
