@@ -18,10 +18,10 @@ abstract class BaseActivity : ComponentActivity() {
 
     @Composable
     fun HandleUI(
-        state: BaseState,
+        baseState: BaseState,
         scaffoldState: ScaffoldState,
     ) {
-        when (state) {  // TODO: For each case, navigate to its proper screen
+        when (baseState) {  // TODO: For each case, navigate to its proper screen
             is BaseState.Empty -> Unit
             is BaseState.Loading -> {
                 ShowLoader()
@@ -30,7 +30,7 @@ abstract class BaseActivity : ComponentActivity() {
                 ShowSnackBar(scaffoldState,getString(R.string.news_not_found_message))
             }
             is BaseState.Error -> {   // should handle each error
-                when (state.error) {
+                when (baseState.error) {
                     is ErrorEntity.Timeout -> ShowSnackBar(scaffoldState, getString(R.string.timeout_exception_message))
 
                     is ErrorEntity.NoInternetConnection -> {

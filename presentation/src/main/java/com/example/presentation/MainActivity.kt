@@ -1,6 +1,7 @@
 package com.example.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -53,17 +54,6 @@ class MainActivity : BaseActivity() {
         val focusRequester = remember { FocusRequester() }
         val searchStatement = rememberSaveable { mutableStateOf("") }
 
-        if (visibleSearchBar.value) {
-            SearchBar(
-                searchStatement = searchStatement,
-                focusRequester = focusRequester
-            )
-
-            LaunchedEffect(key1 = Unit) {
-                focusRequester.requestFocus()
-            }
-        }
-
         LaunchedEffect(key1 = searchStatement) {
             val query = NewsQuery(
                 searchStatement = searchStatement.value.ifBlank { "Technology" },
@@ -72,14 +62,26 @@ class MainActivity : BaseActivity() {
             viewModel.requestNews(query)
         }
 
-        val articles by viewModel.news.collectAsState()
-        val state by viewModel.state.collectAsState()
+        val articles by viewModel.newsState.collectAsState()
+        val baseState by viewModel.baseState.collectAsState()
 
-        HandleUI(scaffoldState = scaffoldState, state = state)
+        HandleUI(scaffoldState = scaffoldState, baseState = baseState)
 
-        if (articles != null)
-            NewsList(articles = articles!!, paddingValues)
+        Column {
+            if (visibleSearchBar.value) {
+                SearchBar(
+                    searchStatement = searchStatement,
+                    focusRequester = focusRequester
+                )
 
+                LaunchedEffect(key1 = Unit) {
+                    focusRequester.requestFocus()
+                }
+            }
+            if (articles != null)
+                NewsList(articles = articles!!, paddingValues)
+            Log.d("news", articles.toString())
+        }
     }
 }
 
