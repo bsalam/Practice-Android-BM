@@ -1,14 +1,13 @@
 package com.example.data.exception_handler
 
-import com.example.composenewsapp.domain.exception_handler.CustomException
-import com.example.composenewsapp.domain.exception_handler.ExceptionHandler
+import com.example.domain.exception_handler.CustomException
+import com.example.domain.exception_handler.ExceptionHandler
 import kotlinx.coroutines.TimeoutCancellationException
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.HttpURLConnection
 
 class ExceptionHandlerImpl : ExceptionHandler {
-
     override fun getCustomException(throwable: Throwable): CustomException {
         return when(throwable) {
             is IOException -> CustomException.NetworkException
