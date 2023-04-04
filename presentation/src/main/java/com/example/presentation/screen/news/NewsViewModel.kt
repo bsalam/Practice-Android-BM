@@ -16,19 +16,19 @@ class NewsViewModel @Inject constructor(
     private val fetchNewsUseCase: FetchNewsUseCase,
 ) : BaseViewModel() {
 
-    private val _news = MutableStateFlow<List<ArticleDomainModel>?>(null)
-    val news: StateFlow<List<ArticleDomainModel>?> get() = _news
+    private val _newsState = MutableStateFlow<List<ArticleDomainModel>?>(null)
+    val newsState: StateFlow<List<ArticleDomainModel>?> get() = _newsState
 
     fun requestNews(newsQuery: NewsQuery) {
         setState(BaseState.Loading)
         executeUseCase {
-            _news.value = fetchNewsUseCase(newsQuery)
-            if(_news.value != null && _news.value!!.isEmpty())
+            _newsState.value = fetchNewsUseCase(newsQuery)
+            if(_newsState.value != null && _newsState.value!!.isEmpty())
                 setState(BaseState.NotFound)
             else
                 setState(BaseState.Empty)
 
-            Log.d("&&&", "after use case invocation and state = ${state.value}")
+            Log.d("&&&", "after use case invocation and state = ${baseState.value}")
         }
     }
 }

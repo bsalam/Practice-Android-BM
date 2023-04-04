@@ -15,16 +15,16 @@ import javax.inject.Inject
 @HiltViewModel
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
-    private val _state = MutableStateFlow<BaseState>(BaseState.Empty)
-    val state: StateFlow<BaseState> get() =  _state.asStateFlow()
+    private val _baseState = MutableStateFlow<BaseState>(BaseState.Empty)
+    val baseState: StateFlow<BaseState> get() =  _baseState.asStateFlow()
     var isFirstTime: Boolean = true
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _state.value = BaseState.Error((exception as CustomException).toError())
+        _baseState.value = BaseState.Error((exception as CustomException).toError())
     }
 
     fun setState(newState: BaseState) {
-        _state.value = newState
+        _baseState.value = newState
     }
 
     fun <T : Any> executeUseCase(call: suspend () -> T) {
