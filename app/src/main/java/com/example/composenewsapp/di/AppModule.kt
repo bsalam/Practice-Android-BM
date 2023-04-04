@@ -1,13 +1,13 @@
 package com.example.composenewsapp.di
 
 import android.net.ConnectivityManager
-import com.example.composenewsapp.data.data_source.remote.api.NewsApi
-import com.example.composenewsapp.data.data_source.remote.api.RetrofitInstance
-import com.example.composenewsapp.data.exception_handler.ExceptionHandlerImpl
-import com.example.composenewsapp.data.repository.NewsRepositoryImpl
-import com.example.composenewsapp.domain.exception_handler.ExceptionHandler
-import com.example.composenewsapp.domain.repository.NewsRepository
-import com.example.composenewsapp.domain.use_cases.FetchNewsUseCase
+import com.example.data.data_source.remote.api.NewsApi
+import com.example.data.data_source.remote.api.RetrofitInstance
+import com.example.data.exception_handler.ExceptionHandlerImpl
+import com.example.data.repository.NewsRepositoryImpl
+import com.example.domain.exception_handler.ExceptionHandler
+import com.example.domain.repository.NewsRepository
+import com.example.domain.use_cases.FetchNewsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

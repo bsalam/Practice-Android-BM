@@ -1,16 +1,16 @@
 package com.example.data.repository
 
 import android.net.ConnectivityManager
-import com.example.composenewsapp.data.mapper.toArticleDomainModel
-import com.example.composenewsapp.data.data_source.remote.api.NewsApi
-import com.example.composenewsapp.domain.exception_handler.CustomException
-import com.example.composenewsapp.domain.exception_handler.ExceptionHandler
-import com.example.composenewsapp.domain.models.ArticleDomainModel
-import com.example.composenewsapp.domain.models.BreakingNewsQuery
-import com.example.composenewsapp.domain.models.NewsQuery
-import com.example.composenewsapp.domain.repository.NewsRepository
-import com.example.composenewsapp.utils.Constants.Companion.SEARCH_NEWS_TIMEOUT
-import com.example.composenewsapp.utils.isConnectedToInternet
+import com.example.data.data_source.remote.api.NewsApi
+import com.example.data.mapper.toArticleDomainModel
+import com.example.data.utils.Constants.Companion.SEARCH_NEWS_TIMEOUT
+import com.example.data.utils.isConnectedToInternet
+import com.example.domain.exception_handler.CustomException
+import com.example.domain.exception_handler.ExceptionHandler
+import com.example.domain.models.ArticleDomainModel
+import com.example.domain.models.BreakingNewsQuery
+import com.example.domain.models.NewsQuery
+import com.example.domain.repository.NewsRepository
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val api: NewsApi,
     private val connectivityManager: ConnectivityManager,
     private val exceptionHandler: ExceptionHandler
-) : NewsRepository{
+) : NewsRepository {
 
     override suspend fun getNews(
         newsQuery: NewsQuery

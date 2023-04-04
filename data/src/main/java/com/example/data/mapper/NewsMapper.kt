@@ -1,7 +1,7 @@
 package com.example.data.mapper
 
-import com.example.composenewsapp.data.data_source.remote.models.ArticleDataModel
-import com.example.composenewsapp.domain.models.ArticleDomainModel
+import com.example.data.data_source.remote.models.ArticleDataModel
+import com.example.domain.models.ArticleDomainModel
 
 
 fun ArticleDataModel.toArticleDomainModel(): ArticleDomainModel {
