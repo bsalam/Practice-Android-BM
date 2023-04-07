@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.domain.models.NewsQuery
+import com.example.domain.models.NewsQueryDomainModel
 import com.example.presentation.base.BaseActivity
 import com.example.presentation.screen.news.NewsViewModel
 import com.example.presentation.screen.news.components.NewsList
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() {
         val searchStatement = rememberSaveable { mutableStateOf("") }
 
         LaunchedEffect(key1 = searchStatement) {
-            val query = NewsQuery(
+            val query = NewsQueryDomainModel(
                 searchStatement = searchStatement.value.ifBlank { "Technology" },
             )
             delay(500)

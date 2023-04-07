@@ -1,10 +1,10 @@
 package com.example.presentation.base
 
-import com.example.domain.exception_handler.ErrorEntity
+import com.example.presentation.models.CustomExceptionPresentationModel
 
 sealed class BaseState {
     object Empty : BaseState()
     object Loading : BaseState()
     object NotFound : BaseState()
-    data class Error(val error: ErrorEntity) : BaseState()
+    data class Error(val error: CustomExceptionPresentationModel) : BaseState()
 }
