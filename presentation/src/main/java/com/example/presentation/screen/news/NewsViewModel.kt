@@ -2,7 +2,7 @@ package com.example.presentation.screen.news
 
 import android.util.Log
 import com.example.domain.models.ArticleDomainModel
-import com.example.domain.models.NewsQuery
+import com.example.domain.models.NewsQueryDomainModel
 import com.example.domain.use_cases.FetchNewsUseCase
 import com.example.presentation.base.BaseState
 import com.example.presentation.base.BaseViewModel
@@ -19,10 +19,10 @@ class NewsViewModel @Inject constructor(
     private val _newsState = MutableStateFlow<List<ArticleDomainModel>?>(null)
     val newsState: StateFlow<List<ArticleDomainModel>?> get() = _newsState
 
-    fun requestNews(newsQuery: NewsQuery) {
+    fun requestNews(newsQueryDomainModel: NewsQueryDomainModel) {
         setState(BaseState.Loading)
         executeUseCase {
-            _newsState.value = fetchNewsUseCase(newsQuery)
+            _newsState.value = fetchNewsUseCase(newsQueryDomainModel)
             if(_newsState.value != null && _newsState.value!!.isEmpty())
                 setState(BaseState.NotFound)
             else

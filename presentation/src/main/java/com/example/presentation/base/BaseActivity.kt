@@ -7,7 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
-import com.example.domain.exception_handler.ErrorEntity
+import com.example.presentation.models.CustomExceptionPresentationModel
 import com.example.presentation.R
 import com.example.presentation.common_components.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,20 +31,20 @@ abstract class BaseActivity : ComponentActivity() {
             }
             is BaseState.Error -> {   // should handle each error
                 when (baseState.error) {
-                    is ErrorEntity.Timeout -> ShowSnackBar(scaffoldState, getString(R.string.timeout_exception_message))
+                    is CustomExceptionPresentationModel.Timeout -> ShowSnackBar(scaffoldState, getString(R.string.timeout_exception_message))
 
-                    is ErrorEntity.NoInternetConnection -> {
+                    is CustomExceptionPresentationModel.NoInternetConnection -> {
                         ShowNoInternetConnection(
                             errorMessage = getString(R.string.no_internet_connection_exception_message)
                         )
                     }
-                    is ErrorEntity.Network -> {
+                    is CustomExceptionPresentationModel.Network -> {
                         ShowSnackBar(scaffoldState, getString(R.string.network_exception_meesage))
                     }
-                    is ErrorEntity.ServiceUnreachable -> {
+                    is CustomExceptionPresentationModel.ServiceUnreachable -> {
                         ShowSnackBar(scaffoldState, getString(R.string.service_unreachable_exception_message))
                     }
-                    is ErrorEntity.Unknown -> {
+                    is CustomExceptionPresentationModel.Unknown -> {
                         ShowSnackBar(scaffoldState, getString(R.string.unknown_exception_message))
                     }
                 }

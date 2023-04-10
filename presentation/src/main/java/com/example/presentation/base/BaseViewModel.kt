@@ -2,7 +2,8 @@ package com.example.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.exception_handler.CustomException
+import com.example.domain.models.CustomExceptionDomainModel
+import com.example.presentation.mapper.toCustomExceptionPresentationModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     var isFirstTime: Boolean = true
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _baseState.value = BaseState.Error((exception as CustomException).toError())
+        _baseState.value = BaseState.Error((exception as CustomExceptionDomainModel).toCustomExceptionPresentationModel())
     }
 
     fun setState(newState: BaseState) {

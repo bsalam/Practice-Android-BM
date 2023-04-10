@@ -1,6 +1,6 @@
 package com.example.domain.models
 
-data class BreakingNewsQuery(
+data class BreakingNewsQueryDomainModel(
     val searchStatement: String,
     val pageNumber: Int = 1,
     val countryCode: String = "",
