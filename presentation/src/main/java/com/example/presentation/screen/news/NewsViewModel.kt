@@ -1,6 +1,5 @@
 package com.example.presentation.screen.news
 
-import android.util.Log
 import com.example.domain.models.ArticleDomainModel
 import com.example.domain.models.NewsQueryDomainModel
 import com.example.domain.use_cases.FetchNewsUseCase
@@ -23,12 +22,7 @@ class NewsViewModel @Inject constructor(
         setState(BaseState.Loading)
         executeUseCase {
             _newsState.value = fetchNewsUseCase(newsQueryDomainModel)
-            if(_newsState.value != null && _newsState.value!!.isEmpty())
-                setState(BaseState.NotFound)
-            else
-                setState(BaseState.Empty)
-
-            Log.d("&&&", "after use case invocation and state = ${baseState.value}")
+            setState(BaseState.Empty)
         }
     }
 }
