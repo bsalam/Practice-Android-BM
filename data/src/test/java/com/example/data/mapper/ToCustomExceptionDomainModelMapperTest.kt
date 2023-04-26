@@ -9,6 +9,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import java.io.InterruptedIOException
 
 @RunWith(Parameterized::class) //  is used to indicate that the test class will use parameterized tests.
 class ToCustomExceptionDomainModelMapperTest(private val throwable: Throwable, private val expected: CustomExceptionDomainModel) {
@@ -18,7 +19,7 @@ class ToCustomExceptionDomainModelMapperTest(private val throwable: Throwable, p
         fun data(): Collection<Array<Any>> {
             return listOf(
                 arrayOf(IOException(), CustomExceptionDomainModel.NetworkExceptionDomainModel),
-                //  arrayOf(TimeoutCancellationException(), CustomExceptionDomainModel.TimeoutExceptionDomainModel),
+                arrayOf(InterruptedIOException(), CustomExceptionDomainModel.TimeoutExceptionDomainModel),
                 arrayOf(HttpException(Response.error<Any>(404, "".toResponseBody())), CustomExceptionDomainModel.ServiceNotFoundExceptionDomainModel),
                 arrayOf(HttpException(Response.error<Any>(403, "".toResponseBody())), CustomExceptionDomainModel.AccessDeniedExceptionDomainModel),
                 arrayOf(HttpException(Response.error<Any>(503, "".toResponseBody())), CustomExceptionDomainModel.ServiceUnavailableExceptionDomainModel),
