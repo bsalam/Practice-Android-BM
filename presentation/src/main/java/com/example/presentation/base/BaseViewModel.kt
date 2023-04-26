@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.CustomExceptionDomainModel
 import com.example.presentation.mapper.toCustomExceptionPresentationModel
+import com.example.presentation.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,14 +14,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-open class BaseViewModel @Inject constructor() : ViewModel() {
+open class BaseViewModel @Inject constructor(
+    private val dispatcher: DispatcherProvider
+) : ViewModel() {
 
     private val _baseState = MutableStateFlow<BaseState>(BaseState.Empty)
-    val baseState: StateFlow<BaseState> get() =  _baseState.asStateFlow()
+    val baseState: StateFlow<BaseState> get() = _baseState.asStateFlow()
     var isFirstTime: Boolean = true
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _baseState.value = BaseState.Error((exception as CustomExceptionDomainModel).toCustomExceptionPresentationModel())
+        _baseState.value =
+            BaseState.Error((exception as CustomExceptionDomainModel).toCustomExceptionPresentationModel())
     }
 
     fun setState(newState: BaseState) {
@@ -29,8 +32,9 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     fun <T : Any> executeUseCase(call: suspend () -> T) {
-        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+        viewModelScope.launch(dispatcher.io + exceptionHandler) {
             call.invoke()
         }
     }
 }
+
