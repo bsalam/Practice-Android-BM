@@ -35,7 +35,7 @@ class NewsRepositoryImpl @Inject constructor(
                 language = query.language
             )
 
-            response.articles.map { it.toArticleDomainModel() }
+            response.articles?.map { it.toArticleDomainModel() } ?: emptyList()
 
         } catch (e: Exception) {
             throw e.toCustomExceptionDomainModel()
@@ -57,7 +57,7 @@ class NewsRepositoryImpl @Inject constructor(
                 countryCode = query.countryCode
             )
 
-            response.articles.map { it.toArticleDomainModel() }
+            response.articles?.map { it.toArticleDomainModel() } ?: emptyList()
 
         } catch (e: Exception) {
             throw e.toCustomExceptionDomainModel()
