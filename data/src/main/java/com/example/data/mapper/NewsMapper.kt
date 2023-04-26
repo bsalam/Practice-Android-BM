@@ -10,11 +10,11 @@ import java.net.HttpURLConnection
 
 fun ArticleDataModel.toArticleDomainModel(): ArticleDomainModel {
     return ArticleDomainModel(
-        title = title,
-        description = description,
-        url = url,
+        title = title ?: "",
+        description = description ?: "",
+        url = url ?: "",
         urlToImage = urlToImage ?: "",
-        publishedAt = publishedAt,
+        publishedAt = publishedAt ?: "",
         author = author ?: ""
     )
 }
