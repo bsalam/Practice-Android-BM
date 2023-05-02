@@ -26,9 +26,6 @@ abstract class BaseActivity : ComponentActivity() {
             is BaseState.Loading -> {
                 ShowLoader()
             }
-            is BaseState.NotFound -> {
-                ShowSnackBar(scaffoldState,getString(R.string.news_not_found_message))
-            }
             is BaseState.Error -> {   // should handle each error
                 when (baseState.error) {
                     is CustomExceptionPresentationModel.Timeout -> ShowSnackBar(scaffoldState, getString(R.string.timeout_exception_message))
