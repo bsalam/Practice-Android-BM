@@ -15,13 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 abstract class BaseActivity : ComponentActivity() {
 
-
     @Composable
     fun HandleUI(
         baseState: BaseState,
         scaffoldState: ScaffoldState,
     ) {
-        when (baseState) {  // TODO: For each case, navigate to its proper screen
+        when (baseState) {
             is BaseState.Empty -> Unit
             is BaseState.Loading -> {
                 ShowLoader()

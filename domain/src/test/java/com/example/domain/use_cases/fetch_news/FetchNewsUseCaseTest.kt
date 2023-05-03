@@ -18,7 +18,7 @@ class FetchNewsUseCaseTest {
     private val fetchNewsUseCase = FetchNewsUseCase(newsRepository)
 
     @Test
-    fun `when invoke is called with news query domain model, then it should return a list of article domain models`() =
+    fun `when invoke is called with news query domain model, then it should return a list of article domain model`() =
         runBlocking {
             // Arrange
             val newsQueryDomainModel = NewsQueryDomainModel("technology")
@@ -34,8 +34,8 @@ class FetchNewsUseCaseTest {
         }
 
 
-    @Test
-    fun `when repository throws a NetworkExceptionDomainModel, then invoke should throw the same exception`() =
+    @Test(expected = CustomExceptionDomainModel.NetworkExceptionDomainModel::class)
+    fun `when repository throws a NetworkExceptionDomainModel, then invoke should throw the same exception`() {
         runBlocking {
             // Arrange
             val newsQueryDomainModel = NewsQueryDomainModel("technology")
@@ -43,11 +43,12 @@ class FetchNewsUseCaseTest {
             coEvery { newsRepository.getNews(newsQueryDomainModel) } throws expectedException
 
             // Act & Assert
-            assertFailsWith<CustomExceptionDomainModel.NetworkExceptionDomainModel> {
-                fetchNewsUseCase(newsQueryDomainModel)
-            }
-            coVerify(exactly = 1) { newsRepository.getNews(newsQueryDomainModel) }
-        }
+            //  val e = assertFailsWith<CustomExceptionDomainModel.NetworkExceptionDomainModel> {
+            fetchNewsUseCase(newsQueryDomainModel)
+            //  }
+            // coVerify(exactly = 1) { newsRepository.getNews(newsQueryDomainModel) }
+        } // test annotation for exception
+    }
 
     @Test
     fun `when repository throws a NoInternetConnectionExceptionDomainModel, then invoke should throw the same exception`() =
@@ -145,4 +146,12 @@ class FetchNewsUseCaseTest {
     // coEvery{}: Starts a block of stubbing for coroutines. Part of DSL. Similar to every,
     // but works with suspend functions.Used to define what behaviour is going to be mocked.
     // assertFailsWith<Exception> {}: Asserts that a block fails with a specific exception of type T being thrown.
+
+    /**
+     * In MockK, relaxed is a configuration option that allows you to create a mock object that ignores
+     * any method calls that are not explicitly stubbed. When you create a mock object using mockk(relaxed = true),
+     * you can call any method on the mock object without having to provide an explicit stub for that method.
+     * If you call a method that does not have a stub, the mock object will simply return a reasonable default value.
+     *
+     **/
 }

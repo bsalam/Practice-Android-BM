@@ -3,14 +3,10 @@ package com.example.data.mapper
 import com.example.data.data_source.remote.models.ArticleDataModel
 import com.example.data.data_source.remote.models.SourceDataModel
 import com.example.domain.models.ArticleDomainModel
-import io.mockk.every
-import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
 
 @RunWith(value = Parameterized::class)
 class ToArticleDomainModelMapperTest(
